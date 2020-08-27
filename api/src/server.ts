@@ -3,8 +3,8 @@ import admin, { ServiceAccount } from 'firebase-admin';
 import serviceAccount from './serviceAccountKey.json';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import proxy from 'http-proxy-middleware';
 import { routerAdmin } from "./routes/admin.routes";
+import { routerProxy } from "./routes/proxy.route";
 
 dotenv.config();
 const app = express();
@@ -24,4 +24,4 @@ app.use(bodyParser.json());
 
 app.use('/config-admin', routerAdmin);
 
-// app.use('*', proxy.createProxyMiddleware({target: API, changeOrigin: true}));
+app.use('*', routerProxy);
