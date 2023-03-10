@@ -2,7 +2,11 @@ import { collection } from "../server";
 import { ApiDTO } from '../models/api.dto';
 
 export const listApis = async(): Promise<ApiDTO[]> => {
-    return (await collection.get()).docs.map(doc => doc.data()) as ApiDTO[];
+    const col = await collection.get();
+    console.log(col);
+    console.log(col.docs);
+    console.log(col.docs.map(doc => doc.data()));
+    return col.docs.map(doc => doc.data()) as ApiDTO[];
 }
 
 export const insertApi = async(api: string) => {
