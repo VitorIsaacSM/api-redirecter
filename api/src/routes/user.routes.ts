@@ -18,7 +18,7 @@ routerUser.post('/autenticacao', (req: express.Request<{ email: string, senha: s
       })
       return
     })
-    .catch(err => res.status(500).send(err))
+    .catch(err => res.status(401).json({ message: 'Falha na autenticação', ...err }))
 });
 
 routerUser.post('/cadastro', (req: express.Request<{}, {}, User>, res, next) => {
@@ -30,5 +30,8 @@ routerUser.post('/cadastro', (req: express.Request<{}, {}, User>, res, next) => 
 
   insertUser(req.body)
     .then(() => res.sendStatus(200))
-    .catch(err => res.status(500).send(err));
+    .catch(err => {
+      console.log(err)
+      res.status(400).json({ message: 'Usuário com esse email já cadastrado' })
+    });
 });
